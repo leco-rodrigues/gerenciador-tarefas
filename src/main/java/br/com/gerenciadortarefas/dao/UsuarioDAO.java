@@ -11,7 +11,7 @@ public class UsuarioDAO {
 
     Connection conn;
     PreparedStatement prep;
-    ResultSet resultset;
+    ResultSet rs;
     ArrayList<Usuario> listagem = new ArrayList<>();
     
     public void salvar(Usuario usuario) {
@@ -38,18 +38,19 @@ public class UsuarioDAO {
     public ArrayList<Usuario> listar() {
 
         ArrayList<Usuario> lista = new ArrayList<>();
-        Connection conn = new Conexao().conectar();
+        conn = new Conexao().conectar();
 
         String sql = "SELECT * FROM usuario";
 
         try {
 
-            PreparedStatement prep = conn.prepareStatement(sql);
-            ResultSet rs = prep.executeQuery();
+            prep = conn.prepareStatement(sql);
+            rs = prep.executeQuery();
 
             while (rs.next()) {
 
                 Usuario usuario = new Usuario();
+
                 usuario.setId(rs.getInt("id"));
                 usuario.setNome(rs.getString("nome"));
                 usuario.setEmail(rs.getString("email"));
@@ -64,5 +65,22 @@ public class UsuarioDAO {
         }
 
         return lista;
+    }
+
+    public void excluir(int id) {
+        conn = new Conexao().conectar();
+        
+        String sql = "DELETE FROM usuario WHERE id = ?";
+
+        try {
+            prep = this.conn.prepareStatement(sql);
+            
+            prep.setInt(1, id);
+            
+            prep.executeUpdate();
+            
+        } catch(Exception e) {
+            System.out.println("Erro: " + e);
+        }
     }
 }
