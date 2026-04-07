@@ -83,4 +83,23 @@ public class UsuarioDAO {
             System.out.println("Erro: " + e);
         }
     }
+
+    public void atualizar(int id, String nome, String email) {
+        conn = new Conexao().conectar();
+        
+        String sql = "UPDATE usuario SET nome = ?, email = ? WHERE id = ?";
+        
+        try {
+            prep = this.conn.prepareStatement(sql);
+            
+            prep.setString(1, nome);
+            prep.setString(2, email);
+            prep.setInt(3, id);
+            
+            prep.executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }    
 }
