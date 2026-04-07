@@ -47,7 +47,7 @@ public class CadastroProjeto extends javax.swing.JFrame {
         txtNome = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(java.awt.SystemColor.textHighlight);
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -198,7 +198,7 @@ public class CadastroProjeto extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
             Projeto projeto = new Projeto();
-            String nome = txtId.getText();
+            String nome = txtNome.getText();
             String descricao = txtDescricao.getText();
             Usuario usuario = (Usuario) cmbUsuario.getSelectedItem();
             
