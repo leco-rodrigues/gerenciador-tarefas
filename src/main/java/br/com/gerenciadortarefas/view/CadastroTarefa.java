@@ -19,6 +19,7 @@ public class CadastroTarefa extends javax.swing.JFrame {
         cmbProjeto.removeAllItems();
 
         for (Projeto p : lista) {
+
             cmbProjeto.addItem(p);
         }
     }
@@ -185,13 +186,13 @@ public class CadastroTarefa extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            Tarefa tarefa = new Tarefa();
 
             String titulo = txtTitulo.getText();
             String descricao = txtDescricao.getText();
             String status = cmbStatus.getSelectedItem().toString();
             Projeto projeto = (Projeto) cmbProjeto.getSelectedItem();
 
+            Tarefa tarefa = new Tarefa();
             tarefa.setTitulo(titulo);
             tarefa.setDescricao(descricao);
             tarefa.setStatus(status);
@@ -204,8 +205,7 @@ public class CadastroTarefa extends javax.swing.JFrame {
         
         } catch(Exception e) {
            
-            JOptionPane.showMessageDialog(this, "Erro ao cadastrar tarefa!");
-        
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar tarefa.");        
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 

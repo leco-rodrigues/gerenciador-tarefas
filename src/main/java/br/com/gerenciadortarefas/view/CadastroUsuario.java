@@ -180,9 +180,11 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            Usuario usuario = new Usuario();
+
             String nome = txtId.getText();
             String email = txtEmail.getText();
+
+            Usuario usuario = new Usuario();
             usuario.setNome(nome);
             usuario.setEmail(email);
             
@@ -190,10 +192,10 @@ public class CadastroUsuario extends javax.swing.JFrame {
             usuarioDao.salvar(usuario);
             
             JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
+
         } catch (Exception e){
         
             JOptionPane.showMessageDialog(this, "Erro ao cadastrar usuário.");
-
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -211,6 +213,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
+
             int id = Integer.parseInt(txtId.getText());
             String nome = txtNome.getText();
             String email = txtEmail.getText();
@@ -219,7 +222,9 @@ public class CadastroUsuario extends javax.swing.JFrame {
             usuarioDao.atualizar(id, nome, email);
             
             JOptionPane.showMessageDialog(this, "Cadastro de usuário atualizado!");
+
         } catch(Exception e) {
+
             JOptionPane.showMessageDialog(this, "Erro ao atualizar: " + e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed

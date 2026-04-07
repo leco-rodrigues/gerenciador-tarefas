@@ -1,6 +1,7 @@
 br\com\gerenciadortarefas\view\CadastroProjeto$3.class
 br\com\gerenciadortarefas\dao\ProjetoDAO.class
 br\com\gerenciadortarefas\view\FormUsuario$3.class
+br\com\gerenciadortarefas\view\FormProjeto$2.class
 br\com\gerenciadortarefas\view\CadastroUsuario$2.class
 br\com\gerenciadortarefas\view\TelaPrincipal.class
 br\com\gerenciadortarefas\dao\TarefaDAO.class

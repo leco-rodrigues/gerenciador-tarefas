@@ -7,24 +7,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class ProjetoDAO {
 
-    Connection conn;
-    PreparedStatement prep;
-    ResultSet resultset;
-    ArrayList<Projeto> listagem = new ArrayList<>();
-
     public void salvar(Projeto projeto) {
 
-         conn = new Conexao().conectar();
+        Connection conn = new Conexao().conectar();
         
         String sql = "INSERT INTO projeto (nome, descricao, usuario_id) VALUES (?, ?, ?)";
 
         try {
 
-            prep = this.conn.prepareStatement(sql);
+            PreparedStatement prep = conn.prepareStatement(sql);
 
             prep.setString(1, projeto.getNome());
             prep.setString(2, projeto.getDescricao());
@@ -34,53 +28,19 @@ public class ProjetoDAO {
 
         } catch(Exception e) {
 
-            JOptionPane.showMessageDialog(null, "Erro no cadastro de projeto! Por favor, verifique os dados inseridos.");
-        }
-    }
-    public ArrayList<Projeto> listar() {
-
-        ArrayList<Projeto> lista = new ArrayList<>();
-        Connection conn = new Conexao().conectar();
-
-        String sql = "SELECT * FROM projeto";
-
-        try {
-
-            PreparedStatement prep = conn.prepareStatement(sql);
-            ResultSet rs = prep.executeQuery();
-
-            while (rs.next()) {
-
-                Projeto projeto = new Projeto();
-                projeto.setId(rs.getInt("id"));
-                projeto.setNome(rs.getString("nome"));
-                projeto.setDescricao(rs.getString("descricao"));
-                
-                Usuario usuario = new Usuario();
-                usuario.setId(rs.getInt("usuario_id"));
-
-                projeto.setUsuario(usuario);
-
-                lista.add(projeto);
-            }
-
-        } catch (Exception e) {
-
             System.out.println("Erro: " + e.getMessage());
-
         }
-
-        return lista;
     }
-    
-    public void atualizar(int id, Usuario usuario) {
 
-        conn = new Conexao().conectar();
+    public void atualizarUsuario(int id, Usuario usuario) {
+
+        Connection conn = new Conexao().conectar();
 
         String sql = "UPDATE projeto SET usuario_id = ? WHERE id = ?";
         
         try {
-            prep = this.conn.prepareStatement(sql);
+
+            PreparedStatement prep = conn.prepareStatement(sql);
 
             prep.setInt(1, usuario.getId());
             prep.setInt(2, id);
@@ -95,13 +55,13 @@ public class ProjetoDAO {
 
     public void excluir(int id) {
 
-        conn = new Conexao().conectar();
+        Connection conn = new Conexao().conectar();
 
         String sql = "DELETE FROM projeto WHERE id = ?";
 
         try {
 
-            prep = this.conn.prepareStatement(sql);
+            PreparedStatement prep = conn.prepareStatement(sql);
 
             prep.setInt(1, id);
 
@@ -111,5 +71,41 @@ public class ProjetoDAO {
 
             System.out.println("Erro: " + e.getMessage());
         }
+    }
+
+    public ArrayList<Projeto> listar() {
+
+        Connection conn = new Conexao().conectar();
+        ArrayList<Projeto> lista =  new ArrayList<>();
+        
+        String sql = "SELECT * FROM projeto";
+
+        try {
+
+            PreparedStatement prep = conn.prepareStatement(sql);
+            ResultSet rs = prep.executeQuery();
+
+            while (rs.next()) {
+
+                Projeto projeto = new Projeto();
+
+                projeto.setId(rs.getInt("id"));
+                projeto.setNome(rs.getString("nome"));
+                projeto.setDescricao(rs.getString("descricao"));
+
+                Usuario usuario = new Usuario();
+                usuario.setId(rs.getInt("usuario_id"));
+
+                projeto.setUsuario(usuario);
+
+                lista.add(projeto);
+            }
+
+        } catch (Exception e) {
+
+            System.out.println("Erro: " + e.getMessage());
+        }
+
+        return lista;
     }
 }

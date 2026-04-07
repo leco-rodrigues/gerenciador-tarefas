@@ -7,23 +7,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class TarefaDAO {
-    Connection conn;
-    PreparedStatement prep;
-    ResultSet rs;
-    ArrayList<Tarefa> listagem = new ArrayList<>();
-    
+
     public void salvar(Tarefa tarefa) {
 
-         conn = new Conexao().conectar();
+        Connection conn = new Conexao().conectar();
         
         String sql = "INSERT INTO tarefa (titulo, descricao, status, projeto_id) VALUES (?, ?, ?, ?)";
 
         try {
 
-            prep = this.conn.prepareStatement(sql);
+            PreparedStatement prep = conn.prepareStatement(sql);
 
             prep.setString(1, tarefa.getTitulo());
             prep.setString(2, tarefa.getDescricao());
@@ -34,25 +29,47 @@ public class TarefaDAO {
 
         } catch(Exception e) {
 
-            JOptionPane.showMessageDialog(null, "Erro no cadastro de tarefa! Por favor, verifique os dados inseridos.");
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
+    public void atualizarStatus(int id, String status) {
+        
+        Connection conn = new Conexao().conectar();
+
+        String sql = "UPDATE tarefa SET status = ? WHERE id = ?";
+        
+        try {
+
+            PreparedStatement prep = conn.prepareStatement(sql);
+            
+            prep.setString(1, status);
+            prep.setInt(2, id);
+            
+            prep.executeUpdate();
+            
+        } catch(Exception e) {
+
+            System.out.println("Erro: " + e.getMessage());
         }
     }
 
     public ArrayList<Tarefa> listar() {
 
+        Connection conn = new Conexao().conectar();
         ArrayList<Tarefa> lista = new ArrayList<>();
-        conn = new Conexao().conectar();
 
         String sql = "SELECT * FROM tarefa";
 
         try {
 
-            prep = conn.prepareStatement(sql);
-            rs = prep.executeQuery();
+            PreparedStatement prep = conn.prepareStatement(sql);
+            ResultSet rs = prep.executeQuery();
 
             while (rs.next()) {
 
                 Tarefa tarefa = new Tarefa();
+
                 tarefa.setId(rs.getInt("id"));
                 tarefa.setTitulo(rs.getString("titulo"));
                 tarefa.setDescricao(rs.getString("descricao"));
@@ -69,27 +86,8 @@ public class TarefaDAO {
         } catch (Exception e) {
 
             System.out.println("Erro: " + e.getMessage());
-
         }
 
         return lista;
-    }
-
-    public void atualizarStatus(int id, String status) {
-        
-        conn = new Conexao().conectar();
-        String sql = "UPDATE tarefa SET status = ? WHERE id = ?";
-        
-        try {
-            prep = this.conn.prepareStatement(sql);
-            
-            prep.setString(1, status);
-            prep.setInt(2, id);
-            
-            prep.executeUpdate();
-            
-        } catch(Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
     }
 }

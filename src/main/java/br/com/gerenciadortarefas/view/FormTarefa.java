@@ -16,8 +16,11 @@ public class FormTarefa extends javax.swing.JFrame {
         String dados[][] = new String[tarefas.size()][columns.length];
 
         int i = 0;
+
         for(Tarefa t : tarefas){
+
             dados[i] = new String[]{ 
+
                 String.valueOf(t.getId()), 
                 t.getTitulo(), 
                 t.getDescricao(),
@@ -33,6 +36,7 @@ public class FormTarefa extends javax.swing.JFrame {
 
     public FormTarefa() {
         initComponents();
+
         TarefaDAO tarefa = new TarefaDAO();
         List<Tarefa> lista = tarefa.listar();
 
@@ -181,30 +185,31 @@ public class FormTarefa extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovaTarefaActionPerformed
 
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        int id = Integer.parseInt(txtId.getText());
-        String status = (String) cmbStatus.getSelectedItem();
-        
         try {
+
+            int id = Integer.parseInt(txtId.getText());
+            String status = (String) cmbStatus.getSelectedItem();
+        
             TarefaDAO tarefaDao = new TarefaDAO();
             tarefaDao.atualizarStatus(id, status);
             
             JOptionPane.showMessageDialog(this, "Status Atualizado!");
             
-            TarefaDAO tarefa = new TarefaDAO();
-            List<Tarefa> lista = tarefa.listar();
+            List<Tarefa> lista = tarefaDao.listar();
             preencheTabela(lista);
             
         } catch(Exception e) {
+
             JOptionPane.showMessageDialog(this, "Erro ao atualizar. Por favor, digite um ID válido.");
         }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     private void cmbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStatusActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cmbStatusActionPerformed
 
     public static void main(String args[]) {

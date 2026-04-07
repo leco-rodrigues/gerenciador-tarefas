@@ -19,6 +19,7 @@ public class CadastroProjeto extends javax.swing.JFrame {
         cmbUsuario.removeAllItems();
 
         for (Usuario u : lista) {
+
             cmbUsuario.addItem(u);
         }
     }
@@ -197,11 +198,12 @@ public class CadastroProjeto extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         try {
-            Projeto projeto = new Projeto();
+
             String nome = txtNome.getText();
             String descricao = txtDescricao.getText();
             Usuario usuario = (Usuario) cmbUsuario.getSelectedItem();
             
+            Projeto projeto = new Projeto();
             projeto.setNome(nome);
             projeto.setDescricao(descricao);
             projeto.setUsuario(usuario);
@@ -210,10 +212,10 @@ public class CadastroProjeto extends javax.swing.JFrame {
             projetoDao.salvar(projeto);
             
             JOptionPane.showMessageDialog(this, "Projeto cadastrado com sucesso!");
+
         } catch (Exception e){
         
-            JOptionPane.showMessageDialog(this, "Erro ao cadastrar projeto.");
-        
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar projeto.");        
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -233,7 +235,7 @@ public class CadastroProjeto extends javax.swing.JFrame {
            Usuario usuario = (Usuario) cmbUsuario.getSelectedItem();
            
            ProjetoDAO projetoDao = new ProjetoDAO();
-           projetoDao.atualizar(id, usuario);
+           projetoDao.atualizarUsuario(id, usuario);
            
            JOptionPane.showMessageDialog(this, "Usuário do projeto atualizado");
 

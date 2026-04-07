@@ -9,20 +9,15 @@ import java.util.ArrayList;
 
 public class UsuarioDAO {
 
-    Connection conn;
-    PreparedStatement prep;
-    ResultSet rs;
-    ArrayList<Usuario> listagem = new ArrayList<>();
-    
     public void salvar(Usuario usuario) {
 
-         conn = new Conexao().conectar();
+        Connection conn = new Conexao().conectar();
         
         String sql = "INSERT INTO usuario (nome, email) VALUES (?, ?)";
 
         try {
 
-            prep = this.conn.prepareStatement(sql);
+            PreparedStatement prep = conn.prepareStatement(sql);
 
             prep.setString(1, usuario.getNome());
             prep.setString(2, usuario.getEmail());
@@ -35,17 +30,59 @@ public class UsuarioDAO {
         }
     }
 
+    public void atualizar(int id, String nome, String email) {
+
+        Connection conn = new Conexao().conectar();
+
+        String sql = "UPDATE usuario SET nome = ?, email = ? WHERE id = ?";
+
+        try {
+
+            PreparedStatement prep = conn.prepareStatement(sql);
+
+            prep.setString(1, nome);
+            prep.setString(2, email);
+            prep.setInt(3, id);
+
+            prep.executeUpdate();
+
+        } catch(Exception e) {
+
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
+    public void excluir(int id) {
+
+        Connection conn = new Conexao().conectar();
+
+        String sql = "DELETE FROM usuario WHERE id = ?";
+
+        try {
+
+            PreparedStatement prep = conn.prepareStatement(sql);
+
+            prep.setInt(1, id);
+
+            prep.executeUpdate();
+
+        } catch(Exception e) {
+
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
     public ArrayList<Usuario> listar() {
 
+        Connection conn = new Conexao().conectar();
         ArrayList<Usuario> lista = new ArrayList<>();
-        conn = new Conexao().conectar();
 
         String sql = "SELECT * FROM usuario";
 
         try {
 
-            prep = conn.prepareStatement(sql);
-            rs = prep.executeQuery();
+            PreparedStatement prep = conn.prepareStatement(sql);
+            ResultSet rs = prep.executeQuery();
 
             while (rs.next()) {
 
@@ -61,45 +98,8 @@ public class UsuarioDAO {
         } catch (Exception e) {
 
             System.out.println("Erro: " + e.getMessage());
-
         }
 
         return lista;
     }
-
-    public void excluir(int id) {
-        conn = new Conexao().conectar();
-        
-        String sql = "DELETE FROM usuario WHERE id = ?";
-
-        try {
-            prep = this.conn.prepareStatement(sql);
-            
-            prep.setInt(1, id);
-            
-            prep.executeUpdate();
-            
-        } catch(Exception e) {
-            System.out.println("Erro: " + e);
-        }
-    }
-
-    public void atualizar(int id, String nome, String email) {
-        conn = new Conexao().conectar();
-        
-        String sql = "UPDATE usuario SET nome = ?, email = ? WHERE id = ?";
-        
-        try {
-            prep = this.conn.prepareStatement(sql);
-            
-            prep.setString(1, nome);
-            prep.setString(2, email);
-            prep.setInt(3, id);
-            
-            prep.executeUpdate();
-
-        } catch(Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }    
 }

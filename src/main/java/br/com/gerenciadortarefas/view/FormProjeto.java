@@ -3,6 +3,7 @@ package br.com.gerenciadortarefas.view;
 import br.com.gerenciadortarefas.dao.ProjetoDAO;
 import br.com.gerenciadortarefas.model.Projeto;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FormProjeto extends javax.swing.JFrame {
@@ -15,8 +16,11 @@ public class FormProjeto extends javax.swing.JFrame {
         String dados[][] = new String[projetos.size()][columns.length];
 
         int i = 0;
+
         for(Projeto p : projetos){
+            
             dados[i] = new String[]{ 
+
                 String.valueOf(p.getId()), 
                 p.getNome(), 
                 p.getDescricao(),
@@ -31,6 +35,7 @@ public class FormProjeto extends javax.swing.JFrame {
 
     public FormProjeto() {
         initComponents();
+
         ProjetoDAO projeto = new ProjetoDAO();
         List<Projeto> lista = projeto.listar();
 
@@ -46,6 +51,9 @@ public class FormProjeto extends javax.swing.JFrame {
         tblProjeto = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        btnExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -93,6 +101,21 @@ public class FormProjeto extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
+        jLabel2.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel2.setText("ID:");
+
+        txtId.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+
+        btnExcluir.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
+        btnExcluir.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,15 +130,28 @@ public class FormProjeto extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNovoProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(296, 296, 296))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluir))
+                .addGap(37, 37, 37)
                 .addComponent(btnNovoProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -127,6 +163,26 @@ public class FormProjeto extends javax.swing.JFrame {
         new CadastroProjeto().setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNovoProjetoActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        try {
+
+            int id = Integer.parseInt(txtId.getText());
+
+            ProjetoDAO projetoDao = new ProjetoDAO();
+            projetoDao.excluir(id);
+
+            JOptionPane.showMessageDialog(this, "Projeto excluído!");
+            
+            List<Projeto> lista = projetoDao.listar();
+
+            preencheTabela(lista);
+
+        }catch(Exception e) {
+
+            JOptionPane.showMessageDialog(this, "Erro ao excluir projeto.");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -149,10 +205,13 @@ public class FormProjeto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovoProjeto;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblProjeto;
+    private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
 }

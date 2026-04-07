@@ -16,7 +16,9 @@ public class FormUsuario extends javax.swing.JFrame {
         String dados[][] = new String[usuarios.size()][columns.length];
 
         int i = 0;
+
         for(Usuario u : usuarios){
+
             dados[i] = new String[]{ 
                 String.valueOf(u.getId()), 
                 u.getNome(), 
@@ -31,6 +33,7 @@ public class FormUsuario extends javax.swing.JFrame {
 
     public FormUsuario() {
         initComponents();
+
         UsuarioDAO usuarioDao = new UsuarioDAO();
         List<Usuario> lista = usuarioDao.listar();
 
@@ -166,6 +169,7 @@ public class FormUsuario extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         try {
+
             int id = Integer.parseInt(txtId.getText());
             
             UsuarioDAO usuarioDao = new UsuarioDAO();
@@ -174,7 +178,10 @@ public class FormUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso!");
             
             List<Usuario> lista = usuarioDao.listar();
+            preencheTabela(lista);
+
         } catch(Exception e) {
+
             JOptionPane.showMessageDialog(this, "Erro ao excluir usuário: " + e.getMessage());
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
