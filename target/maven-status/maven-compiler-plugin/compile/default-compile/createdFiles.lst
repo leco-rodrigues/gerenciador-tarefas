@@ -1,3 +1,4 @@
+br\com\gerenciadortarefas\view\CadastroProjeto$3.class
 br\com\gerenciadortarefas\dao\ProjetoDAO.class
 br\com\gerenciadortarefas\view\FormUsuario$3.class
 br\com\gerenciadortarefas\view\CadastroUsuario$2.class
@@ -20,6 +21,7 @@ br\com\gerenciadortarefas\view\CadastroProjeto.class
 br\com\gerenciadortarefas\view\FormProjeto$1.class
 br\com\gerenciadortarefas\view\FormProjeto.class
 br\com\gerenciadortarefas\view\FormTarefa$1.class
+br\com\gerenciadortarefas\view\CadastroProjeto$4.class
 br\com\gerenciadortarefas\view\FormTarefa$4.class
 br\com\gerenciadortarefas\view\CadastroTarefa$2.class
 br\com\gerenciadortarefas\view\CadastroUsuario$1.class
