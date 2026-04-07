@@ -72,4 +72,24 @@ public class ProjetoDAO {
 
         return lista;
     }
+    
+    public void atualizar(int id, Usuario usuario) {
+
+        conn = new Conexao().conectar();
+
+        String sql = "UPDATE projeto SET usuario_id = ? WHERE id = ?";
+        
+        try {
+            prep = this.conn.prepareStatement(sql);
+
+            prep.setInt(1, usuario.getId());
+            prep.setInt(2, id);
+
+            prep.executeUpdate();
+
+        } catch(Exception e) {
+
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
 }
