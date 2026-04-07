@@ -92,4 +92,24 @@ public class ProjetoDAO {
             System.out.println("Erro: " + e.getMessage());
         }
     }
+
+    public void excluir(int id) {
+
+        conn = new Conexao().conectar();
+
+        String sql = "DELETE FROM projeto WHERE id = ?";
+
+        try {
+
+            prep = this.conn.prepareStatement(sql);
+
+            prep.setInt(1, id);
+
+            prep.executeUpdate();
+
+        } catch(Exception e) {
+
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
 }
